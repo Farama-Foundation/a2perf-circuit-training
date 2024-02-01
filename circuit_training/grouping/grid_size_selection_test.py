@@ -19,10 +19,12 @@ import os
 
 from absl import flags
 from absl.testing import absltest
-from circuit_training.environment import placement_util
-from circuit_training.environment import plc_client
-from circuit_training.grouping import grid_size_selection
-from circuit_training.utils import test_utils
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  grid_size_selection
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 

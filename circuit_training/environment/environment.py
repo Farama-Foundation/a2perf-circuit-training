@@ -18,26 +18,38 @@ import datetime
 import math
 import os
 import time
-from typing import Any, Callable, Dict, Optional, Text, Tuple
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Optional
+from typing import Text
+from typing import Tuple
 
-from absl import logging
-from circuit_training.dreamplace import dreamplace_core
-from circuit_training.dreamplace import dreamplace_util
-from circuit_training.environment import coordinate_descent_placer as cd_placer
-from circuit_training.environment import observation_config
-from circuit_training.environment import observation_extractor
-from circuit_training.environment import placement_util
-from circuit_training.environment import plc_client
 import gin
 import gym
 import numpy as np
 import tensorflow as tf
+from absl import logging
 from tf_agents.environments import suite_gym
 from tf_agents.environments import wrappers
 
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_core
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_util
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  coordinate_descent_placer as cd_placer
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_config
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_extractor
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
+
 ObsType = Dict[Text, np.ndarray]
 InfoType = Dict[Text, float]
-
 
 DREAMPLACE_RUNTIME = 'dreamplace_runtime'
 TOTAL_EPISODE_RUNTIME = 'total_episode_runtime'
@@ -129,12 +141,12 @@ class CircuitEnv(object):
       netlist_file: Text = '',
       init_placement: Text = '',
       create_placement_cost_fn: Callable[
-          ..., plc_client.PlacementCost
+        ..., plc_client.PlacementCost
       ] = placement_util.create_placement_cost,
       std_cell_placer_mode: Text = 'fd',
       cost_info_fn: Callable[
-          [plc_client.PlacementCost, bool, bool],
-          Tuple[float, Dict[Text, float]],
+        [plc_client.PlacementCost, bool, bool],
+        Tuple[float, Dict[Text, float]],
       ] = cost_info_function,
       global_seed: int = 0,
       netlist_index: int = 0,
@@ -294,7 +306,7 @@ class CircuitEnv(object):
 
   @property
   def action_space(self) -> gym.spaces.Space:
-    return gym.spaces.Discrete(self._observation_config.max_grid_size**2)
+    return gym.spaces.Discrete(self._observation_config.max_grid_size ** 2)
 
   @property
   def environment_name(self) -> Text:
@@ -332,7 +344,8 @@ class CircuitEnv(object):
   def get_cost_info(
       self, done: bool = False
   ) -> Tuple[float, Dict[Text, float]]:
-    return self._cost_info_fn(plc=self._plc, done=done, infeasible_state=False)  # pytype: disable=wrong-keyword-args  # trace-all-classes
+    return self._cost_info_fn(plc=self._plc, done=done,
+                              infeasible_state=False)  # pytype: disable=wrong-keyword-args  # trace-all-classes
 
   def _get_mask(self) -> np.ndarray:
     """Gets the node mask for the current node.
@@ -342,7 +355,7 @@ class CircuitEnv(object):
     """
     if self._done:
       mask = np.zeros(
-          self._observation_config.max_grid_size**2, dtype=np.int32
+          self._observation_config.max_grid_size ** 2, dtype=np.int32
       )
     else:
       node_index = self._sorted_node_indices[self._current_node]
@@ -360,7 +373,7 @@ class CircuitEnv(object):
       )
       mask = np.pad(mask, pad, mode='constant', constant_values=0)
     return np.reshape(
-        mask, (self._observation_config.max_grid_size**2,)
+        mask, (self._observation_config.max_grid_size ** 2,)
     ).astype(np.int32)
 
   def _get_obs(self) -> ObsType:
@@ -397,7 +410,8 @@ class CircuitEnv(object):
     # Plc modified by CD will be reset at the end of the episode.
 
     def cost_fn(plc):
-      return self._cost_info_fn(plc=plc, done=True, infeasible_state=False)  # pytype: disable=wrong-keyword-args  # trace-all-classes
+      return self._cost_info_fn(plc=plc, done=True,
+                                infeasible_state=False)  # pytype: disable=wrong-keyword-args  # trace-all-classes
 
     cd = cd_placer.CoordinateDescentPlacer(plc=self._plc, cost_fn=cost_fn)
     cd.place()
@@ -439,7 +453,8 @@ class CircuitEnv(object):
       if self._cd_finetune:
         self._run_cd()
         cost = self._cost_info_fn(
-            plc=self._plc, done=True, infeasible_state=False  # pytype: disable=wrong-keyword-args  # trace-all-classes
+            plc=self._plc, done=True, infeasible_state=False
+            # pytype: disable=wrong-keyword-args  # trace-all-classes
         )[0]
         cd_plc_file = os.path.join(self._output_plc_dir, self._cd_plc_file)
         placement_util.save_placement(self._plc, cd_plc_file, user_comments)
@@ -475,7 +490,8 @@ class CircuitEnv(object):
     # This is realized by setting intermediate steps cost as zero, and
     # propagate the final cost with discount factor set to 1 in replay buffer.
     cost, info = self._cost_info_fn(
-        plc=self._plc, done=self._done, infeasible_state=infeasible_state  # pytype: disable=wrong-keyword-args  # trace-all-classes
+        plc=self._plc, done=self._done, infeasible_state=infeasible_state
+        # pytype: disable=wrong-keyword-args  # trace-all-classes
     )
     info[DREAMPLACE_RUNTIME] = total_time
 

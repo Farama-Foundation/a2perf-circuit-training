@@ -14,8 +14,9 @@
 # limitations under the License.
 """Tests for circuit_training.environment.observation_config."""
 
-from circuit_training.environment import observation_config
-from circuit_training.utils import test_utils
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_config
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 
 class ObservationConfigTest(test_utils.TestCase):

@@ -22,13 +22,13 @@ We want you to be successful.
 
 For the training we utilized the following servers and jobs:
 
-*   1 Replay Buffer(Reverb)/Eval server 32vCPUs (n1-standard-32)
-    *   1 Replay Buffer(Reverb) job
-    *   1 Eval job
-*   20 Collect servers 96vCPUs (n1-standard-96)
-    *   Each server running 25 collect jobs for a total of 500.
-*   1 Training server: 8xV100s (n1-standard-96)
-    *   1 Training job
+* 1 Replay Buffer(Reverb)/Eval server 32vCPUs (n1-standard-32)
+    * 1 Replay Buffer(Reverb) job
+    * 1 Eval job
+* 20 Collect servers 96vCPUs (n1-standard-96)
+    * Each server running 25 collect jobs for a total of 500.
+* 1 Training server: 8xV100s (n1-standard-96)
+    * 1 Training job
 
 Each iteration of training clears the replay buffer due to the on-policy nature
 of the PPO algorithm. This results in a large amount of training time spent
@@ -343,7 +343,7 @@ $ tensorboard dev upload --logdir $ROOT_DIR
 The numbers below are from a run we did in January of 2022 on Google Cloud. Much
 has changed and we are not currently taking the time to redo the experiment. The
 instructions on how to scale Circuit Training are evolving and this section
-exists to preserve the results from Jan 2022. 
+exists to preserve the results from Jan 2022.
 
 ### Results
 
@@ -361,32 +361,32 @@ iterations which results in ~107K steps (gradient updates). This
 [tensorboard link](https://tensorboard.dev/experiment/NRlmrDeOT2i4QV334hrywQ)
 contains the raw results of the runs for full transparency and usefulness.
 
-Run id | Seed | Proxy Wirelength | Proxy Congestion | Proxy Density | Step
------- | ---- | ---------------- | ---------------- | ------------- | -------
-run_00 | 111  | 0.1051           | 0.8746           | 0.5154        | 77,184
-run_01 | 111  | 0.0979           | 0.8749           | 0.5217        | 51,992
-run_02 | 111  | 0.1052           | 0.9069           | 0.5289        | 94,872
-run_03 | 222  | 0.1021           | 0.9667           | 0.5799        | 33,232
-run_04 | 222  | 0.0963           | 0.9945           | 0.6795        | 103,984
-run_05 | 222  | 0.1060           | 1.0352           | 0.5886        | 37,520
-run_06 | 333  | 0.1012           | 0.8738           | 0.5110        | 46,096
-run_07 | 333  | 0.0977           | 0.8684           | 0.5109        | 35,912
-run_08 | 333  | 0.1004           | 0.8613           | 0.5160        | 48,776
+ Run id | Seed | Proxy Wirelength | Proxy Congestion | Proxy Density | Step    
+--------|------|------------------|------------------|---------------|---------
+ run_00 | 111  | 0.1051           | 0.8746           | 0.5154        | 77,184  
+ run_01 | 111  | 0.0979           | 0.8749           | 0.5217        | 51,992  
+ run_02 | 111  | 0.1052           | 0.9069           | 0.5289        | 94,872  
+ run_03 | 222  | 0.1021           | 0.9667           | 0.5799        | 33,232  
+ run_04 | 222  | 0.0963           | 0.9945           | 0.6795        | 103,984 
+ run_05 | 222  | 0.1060           | 1.0352           | 0.5886        | 37,520  
+ run_06 | 333  | 0.1012           | 0.8738           | 0.5110        | 46,096  
+ run_07 | 333  | 0.0977           | 0.8684           | 0.5109        | 35,912  
+ run_08 | 333  | 0.1004           | 0.8613           | 0.5160        | 48,776  
 
-_        | Proxy Wirelength | Proxy Congestion | Proxy Density
--------- | ---------------- | ---------------- | -------------
-**mean** | 0.1013           | 0.9174           | 0.5502
-**std**  | 0.0036           | 0.0647           | 0.0568
+ _        | Proxy Wirelength | Proxy Congestion | Proxy Density 
+----------|------------------|------------------|---------------
+ **mean** | 0.1013           | 0.9174           | 0.5502        
+ **std**  | 0.0036           | 0.0647           | 0.0568        
 
 Applying coordinated descent after training resulted in improved proxy numbers
 for complex blocks like those used in TPUs as referenced in the paper. However,
 for the simpler Ariane RISC-V there were modest (1-2%) improvements to proxy
 wirelength and congestion.
 
-_        | Proxy Wirelength | Proxy Congestion | Proxy Density
--------- | ---------------- | ---------------- | -------------
-**mean** | 0.0988           | 0.9077           | 0.5513
-**std**  | 0.0053           | 0.0621           | 0.0589
+ _        | Proxy Wirelength | Proxy Congestion | Proxy Density 
+----------|------------------|------------------|---------------
+ **mean** | 0.0988           | 0.9077           | 0.5513        
+ **std**  | 0.0053           | 0.0621           | 0.0589        
 
 ### Hyperparameters
 
@@ -401,56 +401,57 @@ divergence penalty implemented by
 hyperparameters, if not specified in the table, is the same as the defaults in
 the tf-agents.
 
-| Configuration              | Default Value     | Comments                  |
-| -------------------------- | ----------------- | ------------------------- |
-| **Proxy reward             |                   |                           |
+| Configuration  | Default Value | Comments |
+|----------------|---------------|----------|
+| **Proxy reward |               |          |
+
 : calculation**              :                   :                           :
-| wirelength_weight          | 1.0               |                           |
-| density_weight             | 1.0               | Changed from 0.1 in the   |
+| wirelength_weight | 1.0 | |
+| density_weight | 1.0 | Changed from 0.1 in the |
 :                            :                   : paper, since it produces  :
 :                            :                   : more stable training from :
 :                            :                   : scratch on Ariane blocks. :
-| congestion_weight          | 0.5               | Changed from 0.1 in the   |
+| congestion_weight | 0.5 | Changed from 0.1 in the |
 :                            :                   : paper, since it produces  :
 :                            :                   : more stable training from :
 :                            :                   : scratch on Ariane blocks. :
-| **Standard cell            |                   |                           |
+| **Standard cell | | |
 : placement**                :                   :                           :
-| num_steps                  | [100, 100, 100]   |                           |
-| io_factor                  | 1.0               |                           |
-| move_distance_factors      | [1, 1, 1]         |                           |
-| attract_factors            | [100, 1e-3, 1e-5] |                           |
-| repel_factors              | [0, 1e6, 1e7]     |                           |
-| **Environment              |                   |                           |
+| num_steps | [100, 100, 100]   | |
+| io_factor | 1.0 | |
+| move_distance_factors | [1, 1, 1]         | |
+| attract_factors | [100, 1e-3, 1e-5] | |
+| repel_factors | [0, 1e6, 1e7]     | |
+| **Environment | | |
 : observation**              :                   :                           :
-| max_num_nodes              | 4700              |                           |
-| max_num_edges              | 28400             |                           |
-| max_grid_size              | 128               |                           |
-| default_location_x         | 0.5               |                           |
-| default_location_y         | 0.5               |                           |
-| **Model architecture**     |                   |                           |
-| num_gcn_layers             | 3                 |                           |
-| edge_fc_layers             | 1                 |                           |
-| gcn_node_dim               | 8                 |                           |
-| dirichlet_alpha            | 0.1               |                           |
-| policy_noise_weight        | 0.0               |                           |
-| **Training**               |                   |                           |
-| optimizer                  | Adam              |                           |
-| learning_rate              | 4e-4              |                           |
-| sequence_length            | 134               |                           |
-| num_episodes_per_iteration | 1024              |                           |
-| per_replica_batch_size     | 128               |                           |
-| num_epochs                 | 4                 |                           |
-| value_pred_loss_coef       | 0.5               |                           |
-| entropy_regularization     | 0.01              |                           |
-| importance_ratio_clipping  | 0.2               |                           |
-| discount_factor            | 1.0               |                           |
-| entropy_regularization     | 0.01              |                           |
-| value_pred_loss_coef       | 0.5               |                           |
-| gradient_clipping          | 1.0               |                           |
-| use_gae                    | False             |                           |
-| use_td_lambda_return       | False             |                           |
-| log_prob_clipping          | 0.0               |                           |
-| policy_l2_reg              | 0.0               |                           |
-| value_function_l2_reg      | 0.0               |                           |
-| shared_vars_l2_reg         | 0.0               |                           |
+| max_num_nodes | 4700 | |
+| max_num_edges | 28400 | |
+| max_grid_size | 128 | |
+| default_location_x | 0.5 | |
+| default_location_y | 0.5 | |
+| **Model architecture**     | | |
+| num_gcn_layers | 3 | |
+| edge_fc_layers | 1 | |
+| gcn_node_dim | 8 | |
+| dirichlet_alpha | 0.1 | |
+| policy_noise_weight | 0.0 | |
+| **Training**               | | |
+| optimizer | Adam | |
+| learning_rate | 4e-4 | |
+| sequence_length | 134 | |
+| num_episodes_per_iteration | 1024 | |
+| per_replica_batch_size | 128 | |
+| num_epochs | 4 | |
+| value_pred_loss_coef | 0.5 | |
+| entropy_regularization | 0.01 | |
+| importance_ratio_clipping | 0.2 | |
+| discount_factor | 1.0 | |
+| entropy_regularization | 0.01 | |
+| value_pred_loss_coef | 0.5 | |
+| gradient_clipping | 1.0 | |
+| use_gae | False | |
+| use_td_lambda_return | False | |
+| log_prob_clipping | 0.0 | |
+| policy_l2_reg | 0.0 | |
+| value_function_l2_reg | 0.0 | |
+| shared_vars_l2_reg | 0.0 | |

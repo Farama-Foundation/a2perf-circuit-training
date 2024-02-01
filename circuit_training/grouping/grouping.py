@@ -16,14 +16,18 @@
 import collections
 import copy
 import math
-from typing import Dict, List, Tuple, Union
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Union
 
-from circuit_training.grouping import meta_netlist_data_structure as mnds
 import sortedcontainers
 import tensorflow as tf
-
-from google.protobuf import text_format
 import tensorflow.io.gfile as gfile
+from google.protobuf import text_format
+
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_data_structure as mnds
 
 # Used as a default value for non exist index.
 _NON_EXIST_INDEX = -1

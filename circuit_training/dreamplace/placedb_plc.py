@@ -18,7 +18,9 @@ In this file, we do not conduct placement as it will needs torch library.
 Realistic placement is done in dreamplace_core.
 """
 from absl import logging
-from circuit_training.dreamplace import plc_converter
+
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  plc_converter
 
 
 class PlacedbPlc(object):

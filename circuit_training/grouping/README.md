@@ -1,4 +1,5 @@
 # Grouping
+
 Grouping (clustering) the standard cells in the circuit training netlist.
 
 ## Prerequisite
@@ -6,10 +7,12 @@ Grouping (clustering) the standard cells in the circuit training netlist.
 Before starting, download the following files. They will be referenced by
 environment variables setup in the first step.
 
-   * [hmetis binary](http://glaros.dtc.umn.edu/gkhome/metis/hmetis/download)
-      (University of Minnesota), [alternative link](https://drive.google.com/file/d/1KfsYiQGp3PRlU1htXZ_G_VRDBETpPkdh/view?usp=sharing)
-   * [plc_wrapper_main binary](https://storage.googleapis.com/rl-infra-public/circuit-training/placement_cost/plc_wrapper_main)
-   * Ariane [netlist](https://storage.googleapis.com/rl-infra-public/circuit-training/netlist/ariane.circuit_graph.pb.txt.gz)
+* [hmetis binary](http://glaros.dtc.umn.edu/gkhome/metis/hmetis/download)
+  (University of
+  Minnesota), [alternative link](https://drive.google.com/file/d/1KfsYiQGp3PRlU1htXZ_G_VRDBETpPkdh/view?usp=sharing)
+* [plc_wrapper_main binary](https://storage.googleapis.com/rl-infra-public/circuit-training/placement_cost/plc_wrapper_main)
+*
+Ariane [netlist](https://storage.googleapis.com/rl-infra-public/circuit-training/netlist/ariane.circuit_graph.pb.txt.gz)
 
 Unzip the downloaded netlist file:
 
@@ -18,9 +21,10 @@ $ gzip -d ariane.circuit_graph.pb.txt.gz
 ```
 
 ### Note
+
 If the netlist file is larger than 2 GB, split it into small files. This is
-due to the text proto file size constraint. The smaller files can be 
-passed as follows: 
+due to the text proto file size constraint. The smaller files can be
+passed as follows:
 `--netlist_file=/path/to/netlist_file_1.pb.txt,/path/to/netlist_file_2.pb.txt`
 
 You can use the `split_proto_netlist_main` script from the
@@ -42,8 +46,6 @@ $ export NETLIST_FILE=/path/to/the/netlist.pb.txt
 $ export HMETIS_DIR=/path/to/the/hmetis/binary
 $ export PLC_WRAPPER_MAIN=/path/to/the/plc_wrapper_main
 ```
-
-
 
 ## 2. Run the grouping (clustering) code
 
@@ -80,19 +82,23 @@ good approximation of the standard cells’ placements.
 
 **Q: Where are the nodes coordinates of the incoming netlist defined?**
 
-**A**: We assume that a netlist that has all its nodes already placed. It does not have to be a good
+**A**: We assume that a netlist that has all its nodes already placed. It does
+not have to be a good
 placement. A low effort, fast version of placement results from any tool can be
 used.
 
-**Q: Could you give some hint about how "distance" and "threshold" parameters are determined, for example in the Ariane example?**
+**Q: Could you give some hint about how "distance" and "threshold" parameters
+are determined, for example in the Ariane example?**
 
 **A**  "distance" and "threshold" parameters are specific to each block and
-technology. They need to be adjusted by trial and error. Current defaults are good
+technology. They need to be adjusted by trial and error. Current defaults are
+good
 for Ariane.
 
 **Q: What is the relationship between clustered netlist and adjacency matrix?**
 
-**A**: A cluster (group) of standard cells is treated as a macro. We call them soft macros.
+**A**: A cluster (group) of standard cells is treated as a macro. We call them
+soft macros.
 The original macro is called hard macro. The adjacency matrix is built using the
 connections between the set of nodes including hard macros and soft macros.
 

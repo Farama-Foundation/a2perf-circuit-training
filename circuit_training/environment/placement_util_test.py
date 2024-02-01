@@ -16,11 +16,12 @@
 
 import os
 
-from absl import flags
-from circuit_training.environment import placement_util
-from circuit_training.utils import test_utils
-
 import tensorflow.io.gfile as gfile
+from absl import flags
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 

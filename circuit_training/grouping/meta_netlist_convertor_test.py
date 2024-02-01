@@ -15,14 +15,16 @@
 """Tests for meta_netlist_convertor."""
 import os
 
+import tensorflow as tf
 from absl import flags
 from absl.testing import parameterized
-from circuit_training.grouping import meta_netlist_convertor
-from circuit_training.grouping import meta_netlist_data_structure as mnds
-from circuit_training.utils import test_utils
-import tensorflow as tf
-
 from google.protobuf import text_format
+
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_convertor
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_data_structure as mnds
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 

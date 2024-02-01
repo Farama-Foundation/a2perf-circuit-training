@@ -53,24 +53,25 @@ scaling to 100s of actors.
 
 ## Features
 
-*   Places netlists with hundreds of macros and millions of stdcells (in
-    clustered format).
-*   Computes both macro location and orientation (flipping).
-*   Optimizes multiple objectives including wirelength, congestion, and density.
-*   Supports alignment of blocks to the grid, to model clock strap or macro
-    blockage.
-*   Supports macro-to-macro, macro-to-boundary spacing constraints.
-*   Supports fixed macros.
-*   Supports [DREAMPlace](https://github.com/limbo018/DREAMPlace) as the stdcell placer.
-*   Allows users to specify their own technology parameters, e.g. and routing
-    resources (in routes per micron) and macro routing allocation.
-*   Generates
-    [clustered netlists](https://github.com/google-research/circuit_training/tree/main/circuit_training/grouping).
-*   [TILOS-AI-Institute](https://www.tilos.ai/) has created a
-    [script](https://github.com/TILOS-AI-Institute/MacroPlacement/tree/main/CodeElements/FormatTranslators)
-    to convert LEF/DEF and Bookshelf to the
-    [Netlist Protocol Buffer](https://github.com/google-research/circuit_training/blob/main/docs/NETLIST_FORMAT.md)
-    used as the input for circuit training.
+* Places netlists with hundreds of macros and millions of stdcells (in
+  clustered format).
+* Computes both macro location and orientation (flipping).
+* Optimizes multiple objectives including wirelength, congestion, and density.
+* Supports alignment of blocks to the grid, to model clock strap or macro
+  blockage.
+* Supports macro-to-macro, macro-to-boundary spacing constraints.
+* Supports fixed macros.
+* Supports [DREAMPlace](https://github.com/limbo018/DREAMPlace) as the stdcell
+  placer.
+* Allows users to specify their own technology parameters, e.g. and routing
+  resources (in routes per micron) and macro routing allocation.
+* Generates
+  [clustered netlists](https://github.com/google-research/circuit_training/tree/main/circuit_training/grouping).
+* [TILOS-AI-Institute](https://www.tilos.ai/) has created a
+  [script](https://github.com/TILOS-AI-Institute/MacroPlacement/tree/main/CodeElements/FormatTranslators)
+  to convert LEF/DEF and Bookshelf to the
+  [Netlist Protocol Buffer](https://github.com/google-research/circuit_training/blob/main/docs/NETLIST_FORMAT.md)
+  used as the input for circuit training.
 
 <a id='Installation'></a>
 
@@ -91,9 +92,8 @@ The steps below install the most recent branch and the archive is in the
 [releases section](#releases). There are two methods for installing; but before
 doing either one you need to run the preliminary setup](#preliminary-setup).
 
-*  [Use the docker](#using-the-docker) (**Highly Recommended**)
-*  [Install locally](#install-locally)
-
+* [Use the docker](#using-the-docker) (**Highly Recommended**)
+* [Install locally](#install-locally)
 
 ### Preliminary Setup
 
@@ -143,16 +143,14 @@ Do not forget to do the [prelimary setup](#preliminary-setup).
 
 Circuit Training installation steps:
 
-*   Install our DREAMPlace binary.
-*   Install TF-Agents and The Placement Cost Binary
-*   Run a test
-
+* Install our DREAMPlace binary.
+* Install TF-Agents and The Placement Cost Binary
+* Run a test
 
 #### Install DREAMPlace
 
 Follow the [instructions](#install-dreamplace) for DREAMPlace but do not change
 the ENV VARS that you already exported previously.
-
 
 #### Install TF-Agents and the Placement Cost binary
 
@@ -177,7 +175,6 @@ to `tf-agents[reverb]~=<version you want>`
 tox -e py39-stable -- circuit_training/grouping/grouping_test.py
 ```
 
-
 ## HEAD
 
 We recommand using [stable](#stable) branches; but our team does work from the
@@ -188,9 +185,8 @@ The steps below install the most recent branch and the archive is in the
 [releases section](#releases). There are two methods for installing; but before
 doing either one you need to run the [preliminary setup](#preliminary-setup-2).
 
-*  [Use the docker](#using-the-docker-2) (**Highly Recommended**)
-*  [Install locally](#install-locally-2)
-
+* [Use the docker](#using-the-docker-2) (**Highly Recommended**)
+* [Install locally](#install-locally-2)
 
 ### Preliminary Setup
 
@@ -231,15 +227,14 @@ $ docker run --rm -v ${REPO_ROOT}:/workspace --workdir /workspace circuit_traini
 
 Circuit Training installation steps:
 
-*   Install our DREAMPlace binary.
-*   Install TF-Agents Nightly and the placement cost binary
-*   Run a test
+* Install our DREAMPlace binary.
+* Install TF-Agents Nightly and the placement cost binary
+* Run a test
 
 #### Install DREAMPlace
 
 Follow the [instructions](#install-dreamplace) for DREAMPlace but do not change
 the ENV VARS that you already exported previously.
-
 
 #### Install TF-Agents and the Placement Cost binary
 
@@ -264,7 +259,7 @@ tox -e py39-nightly -- circuit_training/grouping/grouping_test.py
 
 ## Install DREAMPlace
 
-DREAMPlace is **not** provided as a PyPi package and needs to be compilede. We 
+DREAMPlace is **not** provided as a PyPi package and needs to be compilede. We
 provide compiled versions of DREAMPlace taken from our
 [branch](https://github.com/esonghori/DREAMPlace/tree/circuit_training) for a
 range of Python versions built for our docker image (Ubuntu 20.4). We also use
@@ -355,12 +350,11 @@ the filename pattern can be used to install DREAMPle for the versions of Python
 supported. For the Placement Cost binary, the ULR is to the version of the PLC
 used at the time the branch was cut.
 
-Release | Branch / Tag                                                              | TF-Agents                 | DREAMPlace                       | PL
-------- | ------------------------------------------------------------------------- | ------------------------- | -------------------------------- | -------------- |
-HEAD    | [main](https://github.com/google-research/circuit-training)               | tf-agents-nightly[reverb] |
-0.0.3   | [v0.0.3](https://github.com/google-research/circuit_training/tree/v0.0.3) | tf-agents[reverb]~=0.16.0 | dreamplace_20230414_b31e8af_python3.9.tar.gz | [placement cost binary](https://storage.googleapis.com/rl-infra-public/circuit-training/placement_cost/plc_wrapper_main_0.0.3)
-0.0.2   | [v0.0.2](https://github.com/google-research/circuit_training/tree/v0.0.2) | tf-agents[reverb]~=0.16.0 |
-
+ Release | Branch / Tag                                                              | TF-Agents                 | DREAMPlace                                   | PL                                                                                                                             
+---------|---------------------------------------------------------------------------|---------------------------|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+ HEAD    | [main](https://github.com/google-research/circuit-training)               | tf-agents-nightly[reverb] |
+ 0.0.3   | [v0.0.3](https://github.com/google-research/circuit_training/tree/v0.0.3) | tf-agents[reverb]~=0.16.0 | dreamplace_20230414_b31e8af_python3.9.tar.gz | [placement cost binary](https://storage.googleapis.com/rl-infra-public/circuit-training/placement_cost/plc_wrapper_main_0.0.3) 
+ 0.0.2   | [v0.0.2](https://github.com/google-research/circuit_training/tree/v0.0.2) | tf-agents[reverb]~=0.16.0 |
 
 <a id='Results'></a>
 
@@ -382,20 +376,20 @@ for 3 different seeds run 3 times each. This is slightly different than what was
 used in the paper (8 runs each with a different seed), but better captures the
 different sources of variability.
 
- Metric  | Proxy Wirelength | Proxy Congestion | Proxy Density
--------- | ---------------- | ---------------- | -------------
-**mean** | 0.1013           | 0.9174           | 0.5502
-**std**  | 0.0036           | 0.0647           | 0.0568
+ Metric   | Proxy Wirelength | Proxy Congestion | Proxy Density 
+----------|------------------|------------------|---------------
+ **mean** | 0.1013           | 0.9174           | 0.5502        
+ **std**  | 0.0036           | 0.0647           | 0.0568        
 
 The table below summarizes the
 [paper](https://www.nature.com/articles/s41586-021-03544-w.epdf?sharing_token=tYaxh2mR5EozfsSL0WHZLdRgN0jAjWel9jnR3ZoTv0PW0K0NmVrRsFPaMa9Y5We9O4Hqf_liatg-lvhiVcYpHL_YQpqkurA31sxqtmA-E1yNUWVMMVSBxWSp7ZFFIWawYQYnEXoBE4esRDSWqubhDFWUPyI5wK_5B_YIO-D_kS8%3D)
 result for fine-tuning from a pre-trained model over 8 runs with each one using
 a different seed.
 
- Metric  | Proxy Wirelength | Proxy Congestion | Proxy Density
--------- | ---------------- | ---------------- | -------------
-**mean** | 0.1198           | 0.9718           | 0.5729
-**std**  | 0.0019           | 0.0346           | 0.0086
+ Metric   | Proxy Wirelength | Proxy Congestion | Proxy Density 
+----------|------------------|------------------|---------------
+ **mean** | 0.1198           | 0.9718           | 0.5729        
+ **std**  | 0.0019           | 0.0346           | 0.0086        
 
 <a id='FAQ'></a>
 
@@ -547,20 +541,20 @@ We would like to recognize the following individuals for their code
 contributions, discussions, and other work to make the release of the Circuit
 Training library possible.
 
-*   Sergio Guadarrama
-*   Summer Yue
-*   Ebrahim Songhori
-*   Joe Jiang
-*   Toby Boyd
-*   Azalia Mirhoseini
-*   Anna Goldie
-*   Mustafa Yazgan
-*   Shen Wang
-*   Terence Tam
-*   Young-Joon Lee
-*   Roger Carpenter
-*   Quoc Le
-*   Ed Chi
+* Sergio Guadarrama
+* Summer Yue
+* Ebrahim Songhori
+* Joe Jiang
+* Toby Boyd
+* Azalia Mirhoseini
+* Anna Goldie
+* Mustafa Yazgan
+* Shen Wang
+* Terence Tam
+* Young-Joon Lee
+* Roger Carpenter
+* Quoc Le
+* Ed Chi
 
 <a id='Citation'></a>
 

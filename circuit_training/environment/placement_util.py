@@ -20,14 +20,20 @@ All the dependencies in this files should be non-prod.
 import datetime
 import re
 import textwrap
-from typing import Dict, Iterator, List, Optional, Tuple, Union
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from absl import logging
-from circuit_training.environment import plc_client
 import gin
 import numpy as np
-
 import tensorflow.io.gfile as gfile
+from absl import logging
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
 
 
 def nodes_of_types(

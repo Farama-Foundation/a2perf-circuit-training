@@ -16,12 +16,15 @@
 
 import random
 
-from absl import app
-from absl import flags
-from circuit_training.dreamplace import dreamplace_core
-from circuit_training.dreamplace import dreamplace_util
 import numpy as np
 import torch
+from absl import app
+from absl import flags
+
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_core
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_util
 
 _SEED = flags.DEFINE_integer(
     'seed', 0, 'RNG seed for all algorithms.If None, RNG is not seeded.'

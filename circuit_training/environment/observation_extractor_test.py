@@ -16,16 +16,19 @@
 
 import os
 
+import numpy as np
 from absl import flags
 from absl import logging
-from circuit_training.environment import observation_config
-from circuit_training.environment import observation_extractor
-from circuit_training.environment import placement_util
-from circuit_training.utils import test_utils
-import numpy as np
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_config
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_extractor
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
-
 
 _CIRCUIT_TRAINING_DIR = 'circuit_training'
 _TESTDATA_DIR = (

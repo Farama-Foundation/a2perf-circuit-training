@@ -17,14 +17,16 @@ import copy
 import itertools
 import os
 
-from absl import flags
-from circuit_training.grouping import grouping
-from circuit_training.grouping import meta_netlist_convertor
-from circuit_training.grouping import meta_netlist_data_structure as mnds
 import tensorflow as tf
-
-from google.protobuf import text_format
 import tensorflow.io.gfile as gfile
+from absl import flags
+from google.protobuf import text_format
+
+from a2perf.domains.circuit_training.circuit_training.grouping import grouping
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_convertor
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_data_structure as mnds
 
 FLAGS = flags.FLAGS
 

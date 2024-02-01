@@ -18,7 +18,8 @@ import json
 import socket
 import subprocess
 import tempfile
-from typing import Any, Text
+from typing import Any
+from typing import Text
 
 from absl import flags
 from absl import logging

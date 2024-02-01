@@ -15,8 +15,8 @@
 """Pytest fixtures."""
 import sys
 
-from absl import flags
 import pytest
+from absl import flags
 
 
 @pytest.fixture(scope='session', autouse=True)
