@@ -18,18 +18,20 @@ import datetime
 import math
 import os
 import time
-from typing import Any
 from typing import Callable
 from typing import Dict
 from typing import Optional
 from typing import Text
 from typing import Tuple
+from typing import Union
 
 import gin
-import gym
+import gym.spaces as legacy_gym_spaces
+import gymnasium as gym
 import numpy as np
 import tensorflow as tf
 from absl import logging
+from gymnasium.core import ActType
 from tf_agents.environments import suite_gym
 from tf_agents.environments import wrappers
 
@@ -131,7 +133,7 @@ def cost_info_function(
 
 
 @gin.configurable
-class CircuitEnv(object):
+class CircuitEnv(gym.Env):
   """Defines the CircuitEnv class."""
 
   INFEASIBLE_REWARD = -1.0
@@ -140,6 +142,7 @@ class CircuitEnv(object):
       self,
       netlist_file: Text = '',
       init_placement: Text = '',
+      plc_wrapper_main: Text = None,
       create_placement_cost_fn: Callable[
         ..., plc_client.PlacementCost
       ] = placement_util.create_placement_cost,
@@ -193,6 +196,9 @@ class CircuitEnv(object):
       save_partial_placement: If true, eval also saves the placement even if RL
         does not place all nodes when an episode is done.
     """
+
+    super(CircuitEnv, self).__init__()
+
     self._global_seed = global_seed
     if not netlist_file:
       raise ValueError('netlist_file must be provided.')
@@ -211,7 +217,8 @@ class CircuitEnv(object):
     self._output_all_features = output_all_features
     self._node_order = node_order
     self._plc = create_placement_cost_fn(
-        netlist_file=netlist_file, init_placement=init_placement
+        netlist_file=netlist_file, init_placement=init_placement,
+        plc_wrapper_main=plc_wrapper_main
     )
     self._save_snapshot = save_snapshot
     self._save_partial_placement = save_partial_placement
@@ -297,7 +304,7 @@ class CircuitEnv(object):
     self.reset()
 
   @property
-  def observation_space(self) -> gym.spaces.Space:
+  def observation_space(self) -> legacy_gym_spaces.Space:
     """Env Observation space."""
     if self._output_all_features:
       return self._observation_config.observation_space
@@ -305,8 +312,9 @@ class CircuitEnv(object):
     return self._observation_config.dynamic_observation_space
 
   @property
-  def action_space(self) -> gym.spaces.Space:
-    return gym.spaces.Discrete(self._observation_config.max_grid_size ** 2)
+  def action_space(self) -> legacy_gym_spaces.Space:
+    return legacy_gym_spaces.Discrete(
+        self._observation_config.max_grid_size ** 2)
 
   @property
   def environment_name(self) -> Text:
@@ -508,8 +516,15 @@ class CircuitEnv(object):
 
     return -cost, info
 
-  def reset(self) -> ObsType:
-    """Restes the environment.
+  def reset(
+      self,
+      *,
+      seed: Optional[int] = None,
+      return_info: bool = False,
+      options: Optional[dict] = None,
+  ) -> Union[ObsType, tuple[ObsType, dict]]:
+
+    """Resets the environment.
 
     Returns:
       An initial observation.
@@ -578,7 +593,7 @@ class CircuitEnv(object):
           % (self._std_cell_placer_mode)
       )
 
-  def step(self, action: int) -> Tuple[ObsType, float, bool, Any]:
+  def step(self, action: ActType) -> Tuple[ObsType, float, bool, bool, dict]:
     """Steps the environment.
 
     Args:
@@ -627,7 +642,8 @@ class CircuitEnv(object):
 
     cost, info = self.call_analytical_placer_and_get_cost()
 
-    return self._get_obs(), cost, self._done, info
+    # Done is set twice due to gynasium's terminated/truncated condition
+    return self._get_obs(), cost, self._done, self._done, info
 
 
 def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:

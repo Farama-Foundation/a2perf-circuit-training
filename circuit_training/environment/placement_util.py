@@ -199,6 +199,7 @@ def fix_port_coordinates(plc: plc_client.PlacementCost) -> None:
 @gin.configurable
 def create_placement_cost(
     netlist_file: str,
+    plc_wrapper_main: Optional[str] = None,
     init_placement: Optional[str] = None,
     overlap_threshold: float = 4e-3,
     congestion_smooth_range: int = 5,
@@ -259,7 +260,10 @@ def create_placement_cost(
     )
 
   plc = plc_client.PlacementCost(
-      netlist_file, macro_macro_x_spacing, macro_macro_y_spacing
+      netlist_file=netlist_file,
+      macro_macro_x_spacing=macro_macro_x_spacing,
+      macro_macro_y_spacing=macro_macro_y_spacing,
+      plc_wrapper_main=plc_wrapper_main,
   )
 
   # It is better to make the shape of soft macros square for

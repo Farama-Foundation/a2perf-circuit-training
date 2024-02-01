@@ -12,6 +12,7 @@ environment variables setup in the first step.
   Minnesota), [alternative link](https://drive.google.com/file/d/1KfsYiQGp3PRlU1htXZ_G_VRDBETpPkdh/view?usp=sharing)
 * [plc_wrapper_main binary](https://storage.googleapis.com/rl-infra-public/circuit-training/placement_cost/plc_wrapper_main)
 *
+
 Ariane [netlist](https://storage.googleapis.com/rl-infra-public/circuit-training/netlist/ariane.circuit_graph.pb.txt.gz)
 
 Unzip the downloaded netlist file:
