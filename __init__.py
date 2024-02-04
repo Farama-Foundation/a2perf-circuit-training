@@ -24,6 +24,9 @@ gym.envs.register(
         netlist_file=netlist_file_path,
         init_placement=init_placement_file_path,
         plc_wrapper_main=plc_wrapper_main,
+        netlist_index=0,
+        use_legacy_step=True,
+        use_legacy_reset=True,
     )
 )
 
@@ -31,8 +34,11 @@ legacy_gym.envs.register(
     id='CircuitTraining-v0',
     entry_point='a2perf.domains.circuit_training.circuit_training.environment.environment:create_circuit_environment',
     kwargs=dict(
+        use_legacy_step=True,
+        use_legacy_reset=True,
         netlist_file=netlist_file_path,
         init_placement=init_placement_file_path,
         plc_wrapper_main=plc_wrapper_main,
+        netlist_index=0,
     )
 )

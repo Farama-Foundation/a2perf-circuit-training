@@ -32,7 +32,6 @@ import numpy as np
 import tensorflow as tf
 from absl import logging
 from gymnasium.core import ActType
-from tf_agents.environments import suite_gym
 from tf_agents.environments import wrappers
 
 from a2perf.domains.circuit_training.circuit_training.dreamplace import \
@@ -163,6 +162,9 @@ class CircuitEnv(gym.Env):
       node_order: Text = 'descending_size_macro_first',
       save_snapshot: bool = True,
       save_partial_placement: bool = False,
+      use_legacy_reset: bool = False,
+      use_legacy_step: bool = False,
+      render_mode: str = None,
   ):
     """Creates a CircuitEnv.
 
@@ -301,6 +303,11 @@ class CircuitEnv(gym.Env):
         observation_config=self._observation_config,
         netlist_index=self._netlist_index,
     )
+
+    self._use_legacy_reset = use_legacy_reset
+    self._use_legacy_step = use_legacy_step
+    self._render_mode = render_mode
+
     self.reset()
 
   @property
@@ -536,7 +543,11 @@ class CircuitEnv(gym.Env):
     self._current_mask = self._get_mask()
     self._observation_extractor.reset()
     self._episode_start_time = time.time()
-    return self._get_obs()
+
+    if self._use_legacy_reset:
+      return self._get_obs()
+    else:
+      return self._get_obs(), {}
 
   def translate_to_original_canvas(self, action: int) -> int:
     """Translates a padded location to real one in the original canvas."""
@@ -641,10 +652,26 @@ class CircuitEnv(gym.Env):
         return self.reset(), self.INFEASIBLE_REWARD, True, info
 
     cost, info = self.call_analytical_placer_and_get_cost()
+    if self._use_legacy_step:
+      return self._get_obs(), cost, self._done, info
+    else:
+      # Done is set twice due to gynasium's terminated/truncated condition
+      return self._get_obs(), cost, self._done, self._done, info
 
-    # Done is set twice due to gynasium's terminated/truncated condition
-    return self._get_obs(), cost, self._done, self._done, info
 
+# def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:
+#   """Create an `CircuitEnv` wrapped as a Gym environment.
+#
+#   Args:
+#     *args: Arguments.
+#     **kwarg: keyworded Arguments.
+#
+#   Returns:
+#     PyEnvironment used for training.
+#   """
+#   env = CircuitEnv(*args, **kwarg)
+#
+#   return wrappers.ActionClipWrapper(suite_gym.wrap_env(env))
 
 def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:
   """Create an `CircuitEnv` wrapped as a Gym environment.
@@ -657,5 +684,4 @@ def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:
     PyEnvironment used for training.
   """
   env = CircuitEnv(*args, **kwarg)
-
-  return wrappers.ActionClipWrapper(suite_gym.wrap_env(env))
+  return env
