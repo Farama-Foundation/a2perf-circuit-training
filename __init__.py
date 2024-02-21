@@ -1,3 +1,6 @@
+import os
+import sys
+
 import gym as legacy_gym
 import gymnasium as gym
 import pkg_resources
@@ -12,8 +15,13 @@ init_placement_file_path = pkg_resources.resource_filename(
     'domains/circuit_training/circuit_training/environment/test_data/ariane/initial.plc'
 )
 
-# TODO: Ship the binary with the package and use it.
-plc_wrapper_main = '/usr/local/bin/plc_wrapper_main'
+# Determine the base path of the current Python installation
+python_base_path = sys.prefix
+plc_wrapper_main = os.path.join(python_base_path, 'bin', 'plc_wrapper_main')
+
+# Fallback to global installation path
+if not os.path.exists(plc_wrapper_main):
+  plc_wrapper_main = '/usr/local/bin/plc_wrapper_main'
 
 gym.envs.register(
     id='CircuitTraining-v0',
