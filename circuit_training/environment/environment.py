@@ -201,7 +201,6 @@ class CircuitEnv(gym.Env):
     super(CircuitEnv, self).__init__()
 
     self._global_seed = global_seed
-    self.seed = global_seed # for compatibility with gymnasium
     if not netlist_file:
       raise ValueError('netlist_file must be provided.')
 
@@ -543,7 +542,6 @@ class CircuitEnv(gym.Env):
     self._current_mask = self._get_mask()
     self._observation_extractor.reset()
     self._episode_start_time = time.time()
-    self.seed = seed # for compatibility with gymnasium
     if self._use_legacy_reset:
       return self._get_obs()
     else:
