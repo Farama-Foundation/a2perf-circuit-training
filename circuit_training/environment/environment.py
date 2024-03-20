@@ -673,6 +673,9 @@ class CircuitEnv(gym.Env):
     Returns:
       RGB numpy array of the rendered environment if mode is 'rgb_array'.
     """
+    if self._render_mode is None:
+      return None
+
     if self.clock is None:
       self.clock = pygame.time.Clock()
 
