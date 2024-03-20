@@ -48,14 +48,6 @@ class PlacementCost(object):
       macro_macro_x_spacing: Macro-to-macro x spacing in microns.
       macro_macro_y_spacing: Macro-to-macro y spacing in microns.
     """
-    if plc_wrapper_main is None:
-      # Try to check PATH environment for plc_wrapper_main
-      plc_wrapper_main = os.environ.get('PLC_WRAPPER_MAIN')
-    if plc_wrapper_main is None:
-      logging.info('PLC_WRAPPER_MAIN environment variable not set.')
-      raise ValueError('plc_wrapper_main should be specified. Try setting '
-                       'PLC_WRAPPER_MAIN environment variable.')
-
     self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     address = tempfile.NamedTemporaryFile().name
     self.sock.bind(address)

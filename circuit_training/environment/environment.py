@@ -26,7 +26,6 @@ from typing import Tuple
 from typing import Union
 
 import gin
-import gym.spaces as legacy_gym_spaces
 import gymnasium as gym
 import numpy as np
 import tensorflow as tf
@@ -322,7 +321,7 @@ class CircuitEnv(gym.Env):
     self.reset()
 
   @property
-  def observation_space(self) -> legacy_gym_spaces.Space:
+  def observation_space(self) -> gym.spaces.Space:
     """Env Observation space."""
     if self._output_all_features:
       return self._observation_config.observation_space
@@ -330,8 +329,8 @@ class CircuitEnv(gym.Env):
     return self._observation_config.dynamic_observation_space
 
   @property
-  def action_space(self) -> legacy_gym_spaces.Space:
-    return legacy_gym_spaces.Discrete(
+  def action_space(self) -> gym.spaces.Space:
+    return gym.spaces.Discrete(
         self._observation_config.max_grid_size ** 2)
 
   @property
@@ -554,7 +553,6 @@ class CircuitEnv(gym.Env):
     self._current_mask = self._get_mask()
     self._observation_extractor.reset()
     self._episode_start_time = time.time()
-
     if self._use_legacy_reset:
       return self._get_obs()
     else:

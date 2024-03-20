@@ -25,7 +25,7 @@ if not os.path.exists(plc_wrapper_main):
 
 gym.envs.register(
     id='CircuitTraining-v0',
-    apply_api_compatibility=True,
+    apply_api_compatibility=False,
     disable_env_checker=True,
     entry_point='a2perf.domains.circuit_training.circuit_training.environment.environment:create_circuit_environment',
     kwargs=dict(
@@ -33,8 +33,8 @@ gym.envs.register(
         init_placement=init_placement_file_path,
         plc_wrapper_main=plc_wrapper_main,
         netlist_index=0,
-        use_legacy_step=True,
-        use_legacy_reset=True,
+        use_legacy_step=False,
+        use_legacy_reset=False,
     )
 )
 

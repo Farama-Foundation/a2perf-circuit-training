@@ -22,7 +22,7 @@ from typing import Tuple
 from typing import Union
 
 import gin
-import gym
+import gymnasium as gym
 import numpy as np
 import tensorflow as tf
 
