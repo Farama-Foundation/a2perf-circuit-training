@@ -667,28 +667,18 @@ class CircuitEnv(gym.Env):
       # Done is set twice due to gynasium's terminated/truncated condition
       return self._get_obs(), cost, self._done, self._done, info
 
-  def render(self, mode: str) -> Optional[np.ndarray]:
+  def render(self) -> Optional[np.ndarray]:
     """Renders the environment.
-
-    Args:
-      mode: The mode to render the environment in.
 
     Returns:
       RGB numpy array of the rendered environment if mode is 'rgb_array'.
     """
-
-    if mode not in self.metadata["render_modes"]:
-      logging.warning(
-        f"render mode {mode} is not supported."
-      )
-      return
-    
     if self.clock is None:
       self.clock = pygame.time.Clock()
 
     if self.screen is None:
       pygame.init()
-      if mode == "human":
+      if self._render_mode == "human":
         pygame.display.init()
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
       # rgb_array
@@ -752,7 +742,7 @@ class CircuitEnv(gym.Env):
           break
 
 
-    if mode == "human":
+    if self._render_mode == "human":
       pygame.event.pump()
       self.clock.tick(self.metadata["render_fps"])
       pygame.display.flip()
