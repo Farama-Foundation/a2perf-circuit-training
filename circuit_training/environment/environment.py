@@ -49,6 +49,8 @@ from a2perf.domains.circuit_training.circuit_training.environment import \
 from a2perf.domains.circuit_training.circuit_training.environment import \
   plc_client
 
+import pygame
+
 ObsType = Dict[Text, np.ndarray]
 InfoType = Dict[Text, float]
 
@@ -76,7 +78,6 @@ class InfeasibleActionError(ValueError):
         self.action,
         self.mask,
     )
-
 
 COST_COMPONENTS = ['wirelength', 'congestion', 'density']
 
@@ -136,6 +137,10 @@ class CircuitEnv(gym.Env):
   """Defines the CircuitEnv class."""
 
   INFEASIBLE_REWARD = -1.0
+  metadata = {
+    "render_modes": ["human", "rgb_array"],
+    "render_fps": 30
+  }
 
   def __init__(
       self,
@@ -307,6 +312,12 @@ class CircuitEnv(gym.Env):
     self._use_legacy_reset = use_legacy_reset
     self._use_legacy_step = use_legacy_step
     self._render_mode = render_mode
+
+    self.screen_width = 800
+    self.screen_height = 600
+    self.screen = None 
+    self.clock = None
+    self.isopen = True
 
     self.reset()
 
@@ -658,6 +669,106 @@ class CircuitEnv(gym.Env):
       # Done is set twice due to gynasium's terminated/truncated condition
       return self._get_obs(), cost, self._done, self._done, info
 
+  def render(self, mode: str) -> Optional[np.ndarray]:
+    """Renders the environment.
+
+    Args:
+      mode: The mode to render the environment in.
+
+    Returns:
+      RGB numpy array of the rendered environment if mode is 'rgb_array'.
+    """
+
+    if mode not in self.metadata["render_modes"]:
+      logging.warning(
+        f"render mode {mode} is not supported."
+      )
+      return
+    
+    if self.clock is None:
+      self.clock = pygame.time.Clock()
+
+    if self.screen is None:
+      pygame.init()
+      if mode == "human":
+        pygame.display.init()
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+      # rgb_array
+      else:
+        self.screen = pygame.Surface((self.screen_width, self.screen_height))
+      
+    
+    white = (255, 255, 255) # Color for the background.
+    purple = (128, 0, 128)  # Color for the hard macros.
+    blue = (173, 216, 255)  # Color for the gridlines.
+    black = (0, 0, 0)       # Color for the border of placed macros.
+
+    unplaced_location = (-1, -1) # Unplaced hard macros are set to a location of (-1, -1).
+    grid_spacing = int(min(self.screen_height, self.screen_width) / 16) # Spacing for gridlines.
+    border_thickness = 1 # Border thickness for placed hard macros.
+    border_size = grid_spacing # Used to create a margin for nicer visualization.
+
+    canvas_width, canvas_height = self._plc.get_canvas_width_height()
+    usable_width = self.screen_width - border_size * 2
+    usable_height = self.screen_height - border_size * 2
+    self.screen.fill(white)
+
+    # Drawing gridlines.
+    for x in range(0, self.screen_width, grid_spacing):
+        pygame.draw.line(self.screen, blue, (x, 0), (x, self.screen_height))
+    for y in range(0, self.screen_height, grid_spacing):
+        pygame.draw.line(self.screen, blue, (0, y), (self.screen_width, y))
+
+    # Iterating over hard macros in the order they are to be placed.
+    hard_macro_order = self._sorted_node_indices[: self._num_hard_macros]
+    
+    for i, m in enumerate(hard_macro_order):
+        location = self._plc.get_node_location(m)
+        width, height = self._plc.get_node_width_height(m)
+
+        if location != unplaced_location:
+          
+            # Adding offsets for better visualization.
+            width = int(width * (usable_width / canvas_width))
+            height = int(height * (usable_height / canvas_height))
+            x = int(location[0] * (usable_width / canvas_width) + 0.5)
+            y = int(location[1] * (usable_height / canvas_height) + 0.5)
+
+            # Drawing the hard macro.
+            surface = pygame.Surface((width + border_thickness * 2, height + border_thickness * 2), pygame.SRCALPHA) 
+            surface.set_alpha(128)
+            surface.fill(purple)
+
+            # Drawing the border.
+            pygame.draw.rect(self.screen, black, (x - border_thickness, y - border_thickness, width + border_thickness * 2, height + border_thickness * 2), border_thickness)
+            self.screen.blit(surface, (x, y))
+
+            # Placing index of the hard macro / number of hard macros in the center of the hard macro.
+            font = pygame.font.Font(None, grid_spacing // 2)
+            text = font.render(f"{i+1} / {self._num_hard_macros}", True, (0, 0, 0))
+            text_rect = text.get_rect(center=(x + width / 2, y + height / 2))
+            self.screen.blit(text, text_rect)
+
+        # We can break the loop as we process hard macros in their order.
+        else:
+          break
+
+
+    if mode == "human":
+      pygame.event.pump()
+      self.clock.tick(self.metadata["render_fps"])
+      pygame.display.flip()
+    
+    # rgb_array render mode.
+    else:
+      return np.transpose(np.array(pygame.surfarray.pixels3d(self.screen)), axes=(1, 0, 2))
+
+  def close(self):
+    if self.screen is not None:
+      self.isopen = False
+      pygame.display.quit()
+      pygame.quit()
+    
 
 # def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:
 #   """Create an `CircuitEnv` wrapped as a Gym environment.
