@@ -26,7 +26,7 @@ if not os.path.exists(plc_wrapper_main):
 gym.envs.register(
     id='CircuitTraining-v0',
     apply_api_compatibility=False,
-    disable_env_checker=True,
+    disable_env_checker=False,
     entry_point='a2perf.domains.circuit_training.circuit_training.environment.environment:create_circuit_environment',
     kwargs=dict(
         netlist_file=netlist_file_path,
