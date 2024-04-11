@@ -655,17 +655,24 @@ class CircuitEnv(gym.Env):
         cost, info = self.call_analytical_placer_and_get_cost(
             infeasible_state=True
         )
-        return self.reset(), cost, True, info
+        if self._use_legacy_step:
+          return self.reset(), cost, True, info
+        else:
+          return self.reset(), cost, True, True, info
       else:
         info = {cost: -1.0 for cost in COST_COMPONENTS}
-        return self.reset(), self.INFEASIBLE_REWARD, True, info
+
+        if self._use_legacy_step:
+          return self.reset(), self.INFEASIBLE_REWARD, True, info
+        else:
+          return self.reset(), self.INFEASIBLE_REWARD, True, True, info
 
     cost, info = self.call_analytical_placer_and_get_cost()
     if self._use_legacy_step:
       return self._get_obs(), cost, self._done, info
     else:
-      # Done is set twice due to gynasium's terminated/truncated condition
-      return self._get_obs(), cost, self._done, self._done, info
+      # Done is set twice due to gymnasium's terminated/truncated condition
+      return self._get_obs(), cost, self._done, False, info
 
   def render(self) -> Optional[np.ndarray]:
     """Renders the environment.
