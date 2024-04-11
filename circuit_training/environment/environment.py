@@ -314,7 +314,7 @@ class CircuitEnv(gym.Env):
 
     self.screen_width = 800
     self.screen_height = 600
-    self.screen = None 
+    self.screen = None
     self.clock = None
     self.isopen = True
 
@@ -656,16 +656,20 @@ class CircuitEnv(gym.Env):
             infeasible_state=True
         )
         if self._use_legacy_step:
-          return self.reset(), cost, True, info
+          obs = self.reset()
+          return obs, cost, True, info
         else:
-          return self.reset(), cost, True, True, info
+          obs, gym_info = self.reset()
+          return obs, cost, True, True, info
       else:
         info = {cost: -1.0 for cost in COST_COMPONENTS}
 
         if self._use_legacy_step:
-          return self.reset(), self.INFEASIBLE_REWARD, True, info
+          obs = self.reset()
+          return obs, self.INFEASIBLE_REWARD, True, info
         else:
-          return self.reset(), self.INFEASIBLE_REWARD, True, True, info
+          obs, gym_info = self.reset()
+          return obs, self.INFEASIBLE_REWARD, True, True, info
 
     cost, info = self.call_analytical_placer_and_get_cost()
     if self._use_legacy_step:
@@ -694,8 +698,8 @@ class CircuitEnv(gym.Env):
       # rgb_array
       else:
         self.screen = pygame.Surface((self.screen_width, self.screen_height))
-      
-    
+
+
     white = (255, 255, 255) # Color for the background.
     purple = (128, 0, 128)  # Color for the hard macros.
     blue = (173, 216, 255)  # Color for the gridlines.
@@ -719,13 +723,13 @@ class CircuitEnv(gym.Env):
 
     # Iterating over hard macros in the order they are to be placed.
     hard_macro_order = self._sorted_node_indices[: self._num_hard_macros]
-    
+
     for i, m in enumerate(hard_macro_order):
         location = self._plc.get_node_location(m)
         width, height = self._plc.get_node_width_height(m)
 
         if location != unplaced_location:
-          
+
             # Adding offsets for better visualization.
             width = int(width * (usable_width / canvas_width))
             height = int(height * (usable_height / canvas_height))
@@ -733,7 +737,7 @@ class CircuitEnv(gym.Env):
             y = int(location[1] * (usable_height / canvas_height) + 0.5)
 
             # Drawing the hard macro.
-            surface = pygame.Surface((width + border_thickness * 2, height + border_thickness * 2), pygame.SRCALPHA) 
+            surface = pygame.Surface((width + border_thickness * 2, height + border_thickness * 2), pygame.SRCALPHA)
             surface.set_alpha(128)
             surface.fill(purple)
 
@@ -756,7 +760,7 @@ class CircuitEnv(gym.Env):
       pygame.event.pump()
       self.clock.tick(self.metadata["render_fps"])
       pygame.display.flip()
-    
+
     # rgb_array render mode.
     else:
       return np.transpose(np.array(pygame.surfarray.pixels3d(self.screen)), axes=(1, 0, 2))
@@ -766,7 +770,7 @@ class CircuitEnv(gym.Env):
       self.isopen = False
       pygame.display.quit()
       pygame.quit()
-    
+
 
 # def create_circuit_environment(*args, **kwarg) -> wrappers.ActionClipWrapper:
 #   """Create an `CircuitEnv` wrapped as a Gym environment.
