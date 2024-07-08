@@ -1,3 +1,10 @@
+# ⚠️ IMPORTANT NOTICE ⚠️
+
+This is a submodule of the A2Perf project. For complete documentation and usage
+instructions, please refer to the main **A2Perf README**.
+
+---
+
 <!--* freshness: {
   owner: 'wenjiej'
   owner: 'tobyboyd'
