@@ -52,7 +52,6 @@ $ docker run --rm -v ${REPO_ROOT}:/workspace --workdir /workspace circuit_traini
     --init_place gs://<your bucket>/netlists/ariane/legalized.plc
 ```
 
-
 #### GPU setup and execution
 
 ```shell
@@ -77,5 +76,3 @@ in the scripts.
 * ubuntu_ci: Used for presubmit testing along with `tox`.
 * ubuntu_circuit_training: Suggested for using when running circuit training.
 * ubuntu_dreamplace_build: Used to build binaries of DREAMPlace.
-
-

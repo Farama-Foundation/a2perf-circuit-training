@@ -19,10 +19,12 @@ import os
 import time
 from typing import Optional
 
-from absl import logging
-import circuit_training.environment.placement_util as util
-from dreamplace import Params
 import gin
+from absl import logging
+from dreamplace import Params
+
+import \
+  a2perf.domains.circuit_training.circuit_training.environment.placement_util as util
 
 
 def print_and_save_result(

@@ -14,10 +14,15 @@
 # limitations under the License.
 """A class to store the observation shape and sizes."""
 
-from typing import Dict, List, Optional, Text, Tuple, Union
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Text
+from typing import Tuple
+from typing import Union
 
 import gin
-import gym
+import gymnasium as gym
 import numpy as np
 import tensorflow as tf
 
@@ -66,13 +71,13 @@ STATIC_OBSERVATIONS = (
 )
 
 DYNAMIC_OBSERVATIONS = (
-    'locations_x',
-    'locations_y',
-    'is_node_placed',
-    'current_node',
-    'fake_net_heatmap',
-    'mask',
-) + NETLIST_INDEX
+                           'locations_x',
+                           'locations_y',
+                           'is_node_placed',
+                           'current_node',
+                           'fake_net_heatmap',
+                           'mask',
+                       ) + NETLIST_INDEX
 
 ALL_OBSERVATIONS = STATIC_OBSERVATIONS + DYNAMIC_OBSERVATIONS
 
@@ -113,11 +118,11 @@ class ObservationConfig(object):
         'fake_net_heatmap': gym.spaces.Box(
             low=0.0,
             high=1.0,
-            shape=(self.max_grid_size**2,),
+            shape=(self.max_grid_size ** 2,),
             dtype=np.float32,
         ),
         'mask': gym.spaces.Box(
-            low=0, high=1, shape=(self.max_grid_size**2,), dtype=np.int32
+            low=0, high=1, shape=(self.max_grid_size ** 2,), dtype=np.int32
         ),
         # high is set to 0 intentionally, so when we sample obs for creating
         # the model parameter, we sample 0 for netlist_index.
@@ -191,11 +196,11 @@ class ObservationConfig(object):
         'fake_net_heatmap': gym.spaces.Box(
             low=0.0,
             high=1.0,
-            shape=(self.max_grid_size**2,),
+            shape=(self.max_grid_size ** 2,),
             dtype=np.float32,
         ),
         'mask': gym.spaces.Box(
-            low=0, high=1, shape=(self.max_grid_size**2,), dtype=np.int32
+            low=0, high=1, shape=(self.max_grid_size ** 2,), dtype=np.int32
         ),
         'netlist_index': gym.spaces.Box(
             low=0, high=0, shape=(1,), dtype=np.int32

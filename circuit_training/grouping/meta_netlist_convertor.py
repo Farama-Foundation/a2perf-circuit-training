@@ -14,15 +14,17 @@
 # limitations under the License.
 """Convert functions for MetaNetlist."""
 import itertools
-from typing import Any, Dict
+from typing import Any
+from typing import Dict
 
-from absl import logging
-from circuit_training.grouping import meta_netlist_data_structure as mnds
 import numpy as np
 import tensorflow as tf
-
-from google.protobuf import text_format
 import tensorflow.io.gfile as gfile
+from absl import logging
+from google.protobuf import text_format
+
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_data_structure as mnds
 
 # Default number of columns and rows for canvas.
 _DEFAULT_NUM_COLS_ROWS = 10

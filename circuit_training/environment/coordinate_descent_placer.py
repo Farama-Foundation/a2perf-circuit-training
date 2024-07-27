@@ -15,15 +15,21 @@
 """Coordinate descent placer library."""
 
 import time
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-from absl import logging
-from circuit_training.dreamplace import dreamplace_core
-from circuit_training.dreamplace import dreamplace_util
-from circuit_training.environment import placement_util
-from circuit_training.environment import plc_client
 import gin
 import numpy as np
+from absl import logging
+
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_core
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_util
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
 
 NS_ORIENTATIONS = ['N', 'FN', 'S', 'FS']
 EW_ORIENTATIONS = ['E', 'FE', 'W', 'FW']
@@ -37,7 +43,7 @@ class CoordinateDescentPlacer(object):
       self,
       plc: plc_client.PlacementCost,
       cost_fn: Callable[
-          [plc_client.PlacementCost], tuple[float, dict[str, float]]
+        [plc_client.PlacementCost], tuple[float, dict[str, float]]
       ],
       epochs: int = 2,
       use_stdcell_placer: bool = True,

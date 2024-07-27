@@ -16,12 +16,12 @@
 
 import os
 
+import tensorflow.io.gfile as gfile
 from absl import flags
 from absl.testing import absltest
-from circuit_training.grouping import split_proto_netlist
 
-import tensorflow.io.gfile as gfile
-
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  split_proto_netlist
 
 FLAGS = flags.FLAGS
 

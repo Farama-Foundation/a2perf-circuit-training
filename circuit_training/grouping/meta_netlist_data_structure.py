@@ -15,7 +15,8 @@
 """Data structure definition for meta netlist."""
 import dataclasses
 import enum
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 
 @enum.unique

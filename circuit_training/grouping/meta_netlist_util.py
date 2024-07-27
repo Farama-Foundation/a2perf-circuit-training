@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Util functions for modify meta_netlist."""
-from circuit_training.grouping import meta_netlist_data_structure as mnds
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_data_structure as mnds
 
 
 def set_canvas_width_height(

@@ -14,12 +14,10 @@
 # limitations under the License.
 import os
 import subprocess
-import tempfile
-
-from absl import flags
-from absl import logging
 
 import tensorflow.io.gfile as gfile
+from absl import flags
+from absl import logging
 
 _HMETIS_DIR = flags.DEFINE_string(
     'hmetis_dir',

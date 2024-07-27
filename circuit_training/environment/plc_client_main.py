@@ -18,7 +18,9 @@ from typing import Sequence
 
 from absl import app
 from absl import flags
-from circuit_training.environment import plc_client
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
 
 flags.DEFINE_string("netlist_file", None, "Path to the input netlist file.")
 

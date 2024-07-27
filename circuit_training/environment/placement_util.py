@@ -20,14 +20,20 @@ All the dependencies in this files should be non-prod.
 import datetime
 import re
 import textwrap
-from typing import Dict, Iterator, List, Optional, Tuple, Union
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from absl import logging
-from circuit_training.environment import plc_client
 import gin
 import numpy as np
-
 import tensorflow.io.gfile as gfile
+from absl import logging
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
 
 
 def nodes_of_types(
@@ -193,6 +199,7 @@ def fix_port_coordinates(plc: plc_client.PlacementCost) -> None:
 @gin.configurable
 def create_placement_cost(
     netlist_file: str,
+    plc_wrapper_main: Optional[str] = None,
     init_placement: Optional[str] = None,
     overlap_threshold: float = 4e-3,
     congestion_smooth_range: int = 5,
@@ -253,7 +260,10 @@ def create_placement_cost(
     )
 
   plc = plc_client.PlacementCost(
-      netlist_file, macro_macro_x_spacing, macro_macro_y_spacing
+      netlist_file=netlist_file,
+      macro_macro_x_spacing=macro_macro_x_spacing,
+      macro_macro_y_spacing=macro_macro_y_spacing,
+      plc_wrapper_main=plc_wrapper_main,
   )
 
   # It is better to make the shape of soft macros square for

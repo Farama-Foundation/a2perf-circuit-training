@@ -26,12 +26,16 @@ python circuit_training/environment/coordinate_descent_placer_main.py
 
 import os
 
+import numpy as np
 from absl import app
 from absl import flags
-from circuit_training.environment import coordinate_descent_placer
-from circuit_training.environment import environment
-from circuit_training.environment import placement_util
-import numpy as np
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  coordinate_descent_placer
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  environment
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
 
 _SEED = flags.DEFINE_integer('seed', 0, 'Random seed.')
 _NETLIST_FILE = flags.DEFINE_string(

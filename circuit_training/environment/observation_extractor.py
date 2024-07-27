@@ -17,13 +17,19 @@
 import collections
 import copy
 import math
-from typing import Dict, Optional, Text, Tuple
+from typing import Dict
+from typing import Optional
+from typing import Text
+from typing import Tuple
 
-from absl import logging
-from circuit_training.environment import observation_config as observation_config_lib
-from circuit_training.environment import plc_client
 import gin
 import numpy as np
+from absl import logging
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  observation_config as observation_config_lib
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
 
 
 @gin.configurable
@@ -36,7 +42,7 @@ class ObservationExtractor(object):
       self,
       plc: plc_client.PlacementCost,
       observation_config: Optional[
-          observation_config_lib.ObservationConfig
+        observation_config_lib.ObservationConfig
       ] = None,
       netlist_index: int = 0,
       default_location_x: float = 0.5,
@@ -462,7 +468,7 @@ class ObservationExtractor(object):
     """
 
     zero_heatmap = np.zeros(
-        (self._observation_config.max_grid_size**2,), dtype=np.float32
+        (self._observation_config.max_grid_size ** 2,), dtype=np.float32
     )
     if current_node_index < 0 or current_node_index >= len(
         self.plc.get_macro_indices()
@@ -498,7 +504,7 @@ class ObservationExtractor(object):
         normalized_heatmap, pad, mode='constant', constant_values=0.0
     )
     return np.reshape(
-        normalized_heatmap, (self._observation_config.max_grid_size**2,)
+        normalized_heatmap, (self._observation_config.max_grid_size ** 2,)
     )
 
   def get_static_features(self) -> Dict[Text, np.ndarray]:

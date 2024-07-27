@@ -17,14 +17,18 @@
 import os
 import random
 
+import numpy as np
 from absl import flags
 from absl import logging
 from absl.testing import parameterized
-from circuit_training.environment import coordinate_descent_placer
-from circuit_training.environment import environment
-from circuit_training.environment import placement_util
-from circuit_training.utils import test_utils
-import numpy as np
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  coordinate_descent_placer
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  environment
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 

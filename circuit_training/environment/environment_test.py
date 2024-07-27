@@ -16,12 +16,11 @@
 
 import os
 
-from absl import flags
-from circuit_training.environment import environment
-from circuit_training.utils import test_utils
 import gin
 import numpy as np
 import tensorflow as tf
+import tensorflow.io.gfile as gfile
+from absl import flags
 from tf_agents import specs
 from tf_agents.drivers import py_driver
 from tf_agents.environments import tf_py_environment
@@ -31,7 +30,9 @@ from tf_agents.train.utils import train_utils
 from tf_agents.trajectories import policy_step
 from tf_agents.trajectories import time_step as ts
 
-import tensorflow.io.gfile as gfile
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  environment
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 
@@ -180,8 +181,8 @@ class EnvironmentTest(test_utils.TestCase):
     )
     self.assertEqual(env.action_space.shape, ())
     self.assertTrue(env.action_space.contains(0))
-    self.assertTrue(env.action_space.contains(128**2 - 1))
-    self.assertFalse(env.action_space.contains(128**2))
+    self.assertTrue(env.action_space.contains(128 ** 2 - 1))
+    self.assertFalse(env.action_space.contains(128 ** 2))
 
     mask = env.reset()['mask']
 

@@ -26,7 +26,8 @@ from setuptools.dist import Distribution
 # Enables importing version.py directly by adding its path to sys.path.
 version_path = os.path.join(os.path.dirname(__file__), 'circuit_training')
 sys.path.append(version_path)
-import version as circuit_training_version  # pylint: disable=g-import-not-at-top
+import \
+  version as circuit_training_version  # pylint: disable=g-import-not-at-top
 
 # Default versions the tf-agents dependency.
 TF_AGENTS = 'tf-agents[reverb]'

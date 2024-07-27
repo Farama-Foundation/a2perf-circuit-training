@@ -15,12 +15,11 @@
 """Splits Protobuf circuit graph."""
 
 import os
-from typing import List, Optional
-
-from absl import logging
+from typing import List
+from typing import Optional
 
 import tensorflow.io.gfile as gfile
-
+from absl import logging
 
 # Cut the file just below 2GB.
 _MAX_FILE_SIZE = (2 * 1024 - 1) * 1024 * 1024

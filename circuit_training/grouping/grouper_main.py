@@ -32,7 +32,8 @@ from collections.abc import Sequence
 
 from absl import app
 from absl import flags
-from circuit_training.grouping import grouper
+
+from a2perf.domains.circuit_training.circuit_training.grouping import grouper
 
 _NETLIST_FILE = flags.DEFINE_string(
     'netlist_file', None, 'Path to the input netlist file.'

@@ -14,9 +14,9 @@
 # limitations under the License.
 """Common utility functions for testing."""
 
-from absl import flags
 import gin
 import tensorflow as tf
+from absl import flags
 
 flags.DEFINE_multi_string('test_gin_bindings', [], 'Gin bindings.')
 

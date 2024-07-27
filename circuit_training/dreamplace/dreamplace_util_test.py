@@ -14,8 +14,9 @@
 # limitations under the License.
 """Test for dreamplace_util."""
 
-from circuit_training.dreamplace import dreamplace_util
-from circuit_training.utils import test_utils
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 
 class DreamplaceUtilTest(test_utils.TestCase):

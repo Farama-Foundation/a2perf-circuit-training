@@ -17,20 +17,30 @@
 import dataclasses
 import math
 import os
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Optional
+from typing import Tuple
 
+import sortedcontainers
+import tensorflow.io.gfile as gfile
 from absl import flags
 from absl import logging
-from circuit_training.environment import placement_util
-from circuit_training.environment import plc_client
-from circuit_training.grouping import grid_size_selection
-from circuit_training.grouping import grouping
-from circuit_training.grouping import hmetis_util
-from circuit_training.grouping import meta_netlist_convertor
-from circuit_training.grouping import meta_netlist_util
-import sortedcontainers
 
-import tensorflow.io.gfile as gfile
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  plc_client
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  grid_size_selection
+from a2perf.domains.circuit_training.circuit_training.grouping import grouping
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  hmetis_util
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_convertor
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_util
 
 flags.DEFINE_integer(
     'fixed_logic_levels',

@@ -125,19 +125,18 @@ In addition to the above objectives, we will not design or deploy AI in the
 following application areas:
 
 * Technologies that cause or are likely to cause overall harm. Where there is a
-material risk of harm, we will proceed only where we believe that the benefits
-substantially outweigh the risks, and will incorporate appropriate safety
-constraints.
+  material risk of harm, we will proceed only where we believe that the benefits
+  substantially outweigh the risks, and will incorporate appropriate safety
+  constraints.
 
 * Weapons or other technologies whose principal purpose or implementation is to
-cause or directly facilitate injury to people.
+  cause or directly facilitate injury to people.
 
 * Technologies that gather or use information for surveillance violating
-internationally accepted norms.
+  internationally accepted norms.
 
 * Technologies whose purpose contravenes widely accepted principles of
-international law and human rights.
-
+  international law and human rights.
 
 ## AI for the long term
 

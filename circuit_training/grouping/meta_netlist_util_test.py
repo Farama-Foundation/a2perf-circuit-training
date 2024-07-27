@@ -17,9 +17,12 @@ import os
 
 from absl import flags
 from absl.testing import absltest
-from circuit_training.grouping import meta_netlist_convertor
-from circuit_training.grouping import meta_netlist_util
-from circuit_training.utils import test_utils
+
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_convertor
+from a2perf.domains.circuit_training.circuit_training.grouping import \
+  meta_netlist_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 FLAGS = flags.FLAGS
 

@@ -20,11 +20,10 @@ Convention:
 """
 import pickle
 
+import numpy as np
+import tensorflow.io.gfile as gfile
 from absl import logging
 from dreamplace import PlaceDB
-import numpy as np
-
-import tensorflow.io.gfile as gfile
 
 
 def blockage_area(plc):

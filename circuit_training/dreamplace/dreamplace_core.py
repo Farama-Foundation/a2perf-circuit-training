@@ -15,12 +15,15 @@
 """A soft macro placer using Dreamplace."""
 import time
 
-from absl import logging
-from circuit_training.dreamplace import dreamplace_util
-from circuit_training.dreamplace import placedb_plc
-from dreamplace import NonLinearPlace
 import gin
 import timeout_decorator
+from absl import logging
+from dreamplace import NonLinearPlace
+
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  dreamplace_util
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  placedb_plc
 
 
 @gin.configurable(allowlist=['enable_timeout'])

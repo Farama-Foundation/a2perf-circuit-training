@@ -16,13 +16,16 @@
 
 import os
 
+import numpy as np
 from absl import logging
 from absl.testing import absltest
-from circuit_training.dreamplace import plc_converter
-from circuit_training.environment import placement_util
-from circuit_training.utils import test_utils
 from dreamplace import Params
-import numpy as np
+
+from a2perf.domains.circuit_training.circuit_training.dreamplace import \
+  plc_converter
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
+from a2perf.domains.circuit_training.circuit_training.utils import test_utils
 
 _CIRCUIT_TRAINING_DIR = 'circuit_training'
 

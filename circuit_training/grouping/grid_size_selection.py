@@ -32,7 +32,9 @@ import random
 
 from absl import flags
 from absl import logging
-from circuit_training.environment import placement_util
+
+from a2perf.domains.circuit_training.circuit_training.environment import \
+  placement_util
 
 flags.DEFINE_integer('min_num', 10, 'Minimum number for cols/rows sweep.')
 flags.DEFINE_integer('max_num', 128, 'Maximum number for cols/rows sweep.')
