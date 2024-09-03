@@ -15,7 +15,7 @@ def setup_dreamplace():
     dreamplace_file = f"dreamplace_python{python_version}.tar.gz"
     dreamplace_path = package_path / "dreamplace_builds" / dreamplace_file
 
-    site_packages_path = site.getsitepackages()[0]
+    site_packages_path = site.getusersitepackages()
     dreamplace_dir = os.path.join(site_packages_path, "dreamplace")
 
     if not os.path.exists(dreamplace_dir):
